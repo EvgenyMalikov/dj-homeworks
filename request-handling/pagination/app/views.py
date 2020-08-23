@@ -1,5 +1,10 @@
+from urllib.parse import urlencode
+
+from django.core.paginator import Paginator
 from django.shortcuts import render_to_response, redirect
 from django.urls import reverse
+from .bus_stations import read_bus_station
+from django.conf import settings
 
 
 def index(request):
@@ -7,12 +12,18 @@ def index(request):
 
 
 def bus_stations(request):
-    current_page = 1
-    next_page_url = 'write your url'
+    paginator = Paginator(read_bus_station(settings.BUS_STATION_CSV), 13)
+    current_page = int(request.GET.get('page', 1))
+    bus_stations_ = paginator.get_page(current_page)
+    next_page_url, prev_page_url = None, None
+    if bus_stations_.has_next():
+        next_page_url = '?'.join((reverse('bus_stations'), urlencode({'page': bus_stations_.next_page_number()})))
+    if bus_stations_.has_previous():
+        prev_page_url = '?'.join((reverse('bus_stations'), urlencode({'page': bus_stations_.previous_page_number()})))
     return render_to_response('index.html', context={
-        'bus_stations': [{'Name': 'название', 'Street': 'улица', 'District': 'район'}],
+        'bus_stations': bus_stations_,
         'current_page': current_page,
-        'prev_page_url': None,
-        'next_page_url': next_page_url,
+        'prev_page_url': prev_page_url,
+        'next_page_url':  next_page_url,
     })
 

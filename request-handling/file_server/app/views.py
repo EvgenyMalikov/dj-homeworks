@@ -1,9 +1,10 @@
 import datetime
 
 from django.shortcuts import render
+from django.conf import settings
 
 
-def file_list(request):
+def file_list(request, date=None):
     template_name = 'index.html'
     
     # Реализуйте алгоритм подготавливающий контекстные данные для шаблона по примеру:
