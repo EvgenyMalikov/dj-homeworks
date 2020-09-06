@@ -8,7 +8,7 @@ register_converter(DateConverter, 'dt')
 urlpatterns = [
     # Определите схему урлов с привязкой к отображениям .views.file_list и .views.file_content
     path('', views.file_list, name='file_list'),
-    path('<dt:date>', views.file_list, name='file_list'),    # задайте необязательный параметр "date"
+    path('<dt:date>/', views.file_list, name='file_list'),    # задайте необязательный параметр "date"
                                       # для детальной информации смотрите HTML-шаблоны в директории templates
-    path('file', views.file_content, name='file_content'),
+    path('files/<name>', views.file_content, name='file_content'),
 ]

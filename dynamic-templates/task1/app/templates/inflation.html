@@ -1,3 +1,4 @@
+{% load color_filter %}
 <!DOCTYPE html>{% load static %}
 <html>
   <head>
@@ -19,7 +20,26 @@
         <div class="col s12 m8">
         
         <!-- Ваша логика -->
-
+          <table>
+            <thead>
+              <tr>
+                {% for head in inflation_head %}
+                  <th>{{ head }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in inflation %}
+                <tr>
+                  <td>{{ item|first }}</td>
+                  {% for foo in item|slice:"1:-1" %}
+                    <td bgcolor={{ foo|color_filters }}>{{ foo|default:"-" }}</td>
+                  {% endfor %}
+                  <td bgcolor="gray">{{ item|last }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     {% endblock %}
