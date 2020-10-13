@@ -1,8 +1,8 @@
 from urllib.parse import urlencode
-
 from django.core.paginator import Paginator
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
+
 from .bus_stations import read_bus_station
 from django.conf import settings
 
@@ -20,10 +20,10 @@ def bus_stations(request):
         next_page_url = '?'.join((reverse('bus_stations'), urlencode({'page': bus_stations_.next_page_number()})))
     if bus_stations_.has_previous():
         prev_page_url = '?'.join((reverse('bus_stations'), urlencode({'page': bus_stations_.previous_page_number()})))
-    return render_to_response('index.html', context={
+    context = {
         'bus_stations': bus_stations_,
         'current_page': current_page,
         'prev_page_url': prev_page_url,
         'next_page_url':  next_page_url,
-    })
-
+    }
+    return render(request, 'index.html', context)
