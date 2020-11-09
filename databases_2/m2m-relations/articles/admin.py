@@ -11,7 +11,6 @@ class ScopeInlineFormset(BaseInlineFormSet):
         for form in self.forms:
             if form.cleaned_data.get('is_main'):
                 count += 1
-        # raise Exception(count)
         if count > 1:
             raise ValidationError('Может быть только один главный тэг')
         if count == 0:
