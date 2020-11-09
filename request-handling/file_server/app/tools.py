@@ -23,16 +23,12 @@ def get_file_attr(file_path: str, file_name: str) -> dict:
 def create_list_files(path_to_dir: str, date=None) -> list:
     list_files = []
     list_files_ = os.listdir(path_to_dir)
-    if date:
-        for file_name in list_files_:
-            file = get_file_attr(path_to_dir, file_name)
-            if file['ctime'].date() == date.date():
-                list_files.append(file)
-        return list_files
-    else:
-        for file_name in list_files_:
-            list_files.append(get_file_attr(path_to_dir, file_name))
-        return list_files
+    for file_name in list_files_:
+        file = get_file_attr(path_to_dir, file_name)
+        if date and date.date() != file['ctime'].date():
+            continue
+        list_files.append(file)
+    return list_files
 
 
 def read_file_to_context(path_to_file: str) -> str:
