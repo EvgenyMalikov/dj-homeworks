@@ -122,6 +122,6 @@ SECRET_KEY = 'your secret key'
 DEBUG = True
 
 try:
-    from .settings_local import *
+    from simple_crud.settings_local import *
 except ImportError:
     pass
