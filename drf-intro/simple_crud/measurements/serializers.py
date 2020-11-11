@@ -6,6 +6,7 @@ from .models import Project, Measurement
 
 class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
+    project = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Project
@@ -15,12 +16,14 @@ class ProjectSerializer(serializers.ModelSerializer):
            'latitude',
            'longitude',
            'created_at',
-           'updated_at'
+           'updated_at',
+           'project'
         ]
 
 
 class MeasurementSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True, default='')
+    project = serializers.StringRelatedField()
 
     class Meta:
         model = Measurement
@@ -28,5 +31,6 @@ class MeasurementSerializer(serializers.ModelSerializer):
             'id',
             'value',
             'project',
-            'image'
+            'image',
+            'project'
         ]

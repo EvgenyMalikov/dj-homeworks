@@ -20,6 +20,9 @@ class Project(TimestampFields):
     latitude = models.FloatField()
     longitude = models.FloatField()
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Measurement(TimestampFields):
     """Измерение температуры на объекте."""
@@ -27,4 +30,7 @@ class Measurement(TimestampFields):
     value = models.FloatField()
     project = models.ForeignKey(Project, related_name='project', on_delete=models.CASCADE)
     image = models.ImageField(blank=True, default='',  upload_to='sensors/%Y/%m/%d/')
+
+    def __str__(self):
+        return f'{self.value}'
 
