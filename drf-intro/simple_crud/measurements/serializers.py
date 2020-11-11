@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import Project, Measurement
 
 
-class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
 
     class Meta:
@@ -19,8 +19,8 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class MeasurementSerializer(serializers.HyperlinkedModelSerializer):
-    image = serializers.ImageField(allow_empty_file=True, allow_null=True)
+class MeasurementSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(allow_null=True, default='')
 
     class Meta:
         model = Measurement

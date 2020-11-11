@@ -8,7 +8,9 @@ class TimestampFields(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True
     )
-# abstract = True указывает на то будет ли ялятся дочерний класс так же мета классом
+
+    class Meta:
+        abstract = True  # Это абстрактный класс и для него не будет создаватся таблица в базе данных
 
 
 class Project(TimestampFields):
@@ -23,6 +25,6 @@ class Measurement(TimestampFields):
     """Измерение температуры на объекте."""
 
     value = models.FloatField()
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, upload_to='sensors/%Y/%m/%d/')
+    project = models.ForeignKey(Project, related_name='project', on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, default='',  upload_to='sensors/%Y/%m/%d/')
 
