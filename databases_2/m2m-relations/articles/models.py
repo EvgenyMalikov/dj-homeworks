@@ -30,6 +30,7 @@ class Tag(models.Model):
 class Scope(models.Model):
     article = models.ForeignKey(
         'Article',
+        related_name='scopes',
         on_delete=models.CASCADE
 
     )
