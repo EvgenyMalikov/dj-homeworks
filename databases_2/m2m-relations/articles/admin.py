@@ -33,8 +33,3 @@ class ArticleAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(Scope)
-class CategoryAmin(admin.ModelAdmin):
-    pass

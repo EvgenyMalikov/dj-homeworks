@@ -17,11 +17,19 @@ class Article(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=256)
+    title = models.CharField(
+        max_length=256,
+        verbose_name='Тэг'
+    )
     article = models.ManyToManyField(
         'Article',
         through='Scope',
+        verbose_name='Статья'
     )
+
+    class Meta:
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'
 
     def __str__(self):
         return self.title
