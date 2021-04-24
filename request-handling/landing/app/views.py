@@ -1,6 +1,6 @@
 from collections import Counter
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 # Для отладки механизма ab-тестирования используйте эти счетчики
 # в качестве хранилища количества показов и количества переходов.
@@ -17,7 +17,7 @@ def index(request):
         counter_click['test'] += 1
     elif from_landing_param == 'original':
         counter_click['original'] += 1
-    return render_to_response('index.html')
+    return render(request, 'index.html')
 
 
 def landing(request):
@@ -25,13 +25,15 @@ def landing(request):
     # в зависимости от GET параметра ab-test-arg
     # который может принимать значения original и test
     # Так же реализуйте логику подсчета количества показов
+
     ab_test_param = request.GET.get('ab-test-arg')
     if ab_test_param == 'test':
         counter_show['test'] += 1
-        return render_to_response('landing_alternate.html')
+        return render(request, 'landing_alternate.html')
     elif ab_test_param == 'original':
         counter_show['original'] += 1
-    return render_to_response('landing.html')
+    return render(request, 'landing.html')
+
 
 
 def stats(request):
@@ -45,7 +47,7 @@ def stats(request):
         test_relation = counter_click["test"] / counter_show["test"]
     if counter_click["original"] and counter_show["original"]:
         origin_relation = counter_click["original"] / counter_show["original"]
-    return render_to_response('stats.html', context={
+    return render(request, 'stats.html', context={
         'test_conversion':  test_relation,
         'original_conversion':  origin_relation,
     })
